@@ -5,3 +5,4 @@ PyMySQL
 pillow
 requests
 razorpay
+reportlab
