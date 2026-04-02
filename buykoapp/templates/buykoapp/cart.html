@@ -1,0 +1,196 @@
+{% extends "buykoapp/index.html" %}
+{% block content %}
+<br><br>
+
+<div class="cart-container container">
+
+  <h2 class="cart-title text-center mb-4">Your Cart</h2>
+
+  {% if cart_items %}
+
+  <div class="cart-list">
+
+    {% for item in cart_items %}
+    <div class="cart-item d-flex flex-column flex-md-row align-items-center justify-content-between p-3 mb-3 shadow-sm">
+
+      <!-- Image -->
+      <div class="item-image me-md-3 mb-3 mb-md-0">
+        <img src="{{ item.product.image.url }}" class="cart-img-list">
+      </div>
+
+      <!-- Details -->
+      <div class="item-details flex-grow-1 text-center text-md-start mb-3 mb-md-0">
+        <h5 class="product-name">{{ item.product.name }}</h5>
+        <p class="product-desc">{{ item.product.description|truncatewords:20 }}</p>
+        <div class="item-meta d-flex flex-column flex-md-row gap-2 gap-md-3 justify-content-center justify-content-md-start">
+          <span class="price">Price: ₹{{ item.product.price }}</span>
+          <span class="qty">Qty: {{ item.quantity }}</span>
+          <span class="qty">Total: ₹{{ item.total_price }}</span>
+        </div>
+      </div>
+
+      <!-- Remove Button -->
+      <div class="item-action ms-md-3 text-center">
+        <a href="{% url 'remove_cart' item.product.id %}" class="remove-btn">Remove</a>
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <!-- Grand Total -->
+  <h4 class="grand-total text-end mt-4">Grand Total: <strong>₹{{ total }}</strong></h4>
+
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mt-4 responsive-btn-box">
+
+      <a href="{% url 'index' %}" class="back-btn text-center">Back</a>
+
+      <a href="{% url 'razorpay_cart_payment' %}" class="buy-now-btn text-center ms-md-3">PAY NOW</a>
+
+  </div>
+
+  {% else %}
+
+  <h4 class="empty-cart text-center mt-4">Your cart is empty</h4>
+  <div class="text-center mt-3">
+    <a href="{% url 'index' %}" class="back-btn">Back to Home</a>
+  </div>
+
+  {% endif %}
+
+</div>
+
+<style>
+.cart-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item {
+  background: #ffffff;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.cart-item:hover {
+  transform: translateY(-3px);
+}
+
+.cart-img-list {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.item-details h5 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #001f4d;
+}
+
+.item-details p {
+  font-size: 14px;
+  color: #555;
+  margin: 4px 0;
+}
+
+.item-meta span {
+  font-size: 14px;
+  color: #001f4d;
+  font-weight: 600;
+}
+
+.item-action .remove-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #ff4b4b, #b30000);
+  text-align: center;
+}
+
+.item-action .remove-btn:hover {
+  opacity: 0.9;
+}
+
+/* Buttons */
+.back-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #030630;
+  border: 2px solid #001f4d;
+  color: #001f4d;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #001f4d;
+  color: #fff;
+}
+
+.buy-now-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #011e3d, #001330);
+  box-shadow: 0 6px 15px rgba(0, 31, 77, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.buy-now-btn:hover {
+  transform: scale(1.03);
+}
+
+.responsive-btn-box {
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .item-image {
+    margin-bottom: 12px;
+  }
+
+  .cart-img-list {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+  }
+
+  .item-meta {
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .back-btn,
+  .buy-now-btn {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .responsive-btn-box {
+    gap: 12px;
+  }
+}
+</style>
+
+{% endblock %}

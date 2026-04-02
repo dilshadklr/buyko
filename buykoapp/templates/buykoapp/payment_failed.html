@@ -1,0 +1,29 @@
+{% extends "buykoapp/index.html" %}
+{% block content %}
+
+<style>
+.box {
+  max-width: 600px;
+  margin: 70px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.box i {
+  font-size: 70px;
+  color: #e74c3c;
+}
+</style>
+
+<div class="box">
+  <i class="bi bi-x-circle-fill"></i>
+  <h2 class="text-danger">Payment Failed</h2>
+  <p>{{ msg }}</p>
+
+  <a href="{% url 'index' %}" class="btn btn-outline-danger mt-3">Back to Home</a>
+</div>
+
+{% endblock %}

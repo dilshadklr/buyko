@@ -1,0 +1,170 @@
+{% extends "buykoapp/index.html" %}
+{% block content %}
+
+<style>
+.order-section {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+}
+.order-section h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #001F4D;
+}
+.table th {
+    background: #001F4D;
+    color: white;
+}
+.table td {
+    vertical-align: middle;
+}
+.badge-paid {
+    background: #28a745;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+.badge-unpaid {
+    background: #dc3545;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+.address-col {
+    max-width: 300px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.4;
+    font-size: 14px;
+}
+</style>
+
+<div class="container py-5">
+
+    <!-- ========================= -->
+    <!-- CART ORDERS -->
+    <!-- ========================= -->
+    <div class="order-section">
+        <h2>🛒 Cart Orders (Multiple Items)</h2>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Address</th>
+                    <th>Items</th>
+                    <th>Total Amount</th>
+                    <th>Paid</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><strong>O{{ order.id }}</strong></td>
+                    <td>{{ order.user.username }}</td>
+
+                    <!-- ADDRESS -->
+                    <td class="address-col">
+                        {% if order.user.userprofile.address %}
+                            {{ order.user.userprofile.address }}
+                        {% else %}
+                            <em>No address</em>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% for item in order.items.all %}
+                            {% if item.product %}
+                                {{ item.product.name }} × {{ item.quantity }}<br>
+                            {% else %}
+                                <em>Deleted product</em><br>
+                            {% endif %}
+                        {% empty %}
+                            <em>No items</em>
+                        {% endfor %}
+                    </td>
+
+                    <td>₹{{ order.total_amount }}</td>
+                    <td>
+                        {% if order.paid %}
+                            <span class="badge-paid">Paid</span>
+                        {% else %}
+                            <span class="badge-unpaid">Not Paid</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ order.created_at|date:"d M Y h:i A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        <em>No cart orders found.</em>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ========================= -->
+    <!-- SINGLE PRODUCT ORDERS -->
+    <!-- ========================= -->
+    <div class="order-section">
+        <h2>📦 Single Product Orders</h2>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Address</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Paid</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in single_orders %}
+                <tr>
+                    <td><strong>P{{ payment.id }}</strong></td>
+                    <td>{{ payment.user.username }}</td>
+
+                    <!-- ADDRESS -->
+                    <td class="address-col">
+                        {% if payment.user.userprofile.address %}
+                            {{ payment.user.userprofile.address }}
+                        {% else %}
+                            <em>No address</em>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ payment.display_product_name }} × 1</td>
+                    <td>₹{{ payment.amount }}</td>
+                    <td>
+                        {% if payment.paid %}
+                            <span class="badge-paid">Paid</span>
+                        {% else %}
+                            <span class="badge-unpaid">Not Paid</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ payment.created_at|date:"d M Y h:i A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        <em>No single product orders found.</em>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

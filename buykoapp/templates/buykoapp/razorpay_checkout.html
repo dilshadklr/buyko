@@ -1,0 +1,141 @@
+{% extends "buykoapp/index.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="checkout-wrapper py-5">
+  <div class="checkout-card">
+
+    <h3 class="checkout-title text-center">Complete Payment</h3>
+
+    <div class="product-box my-3">
+        <img src="{{ product.image.url }}" class="product-img">
+        <div>
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-price">Price: ₹{{ product.price }}</div>
+        </div>
+    </div>
+
+    <button id="rzp-button" class="btn-pay">
+      Pay ₹{{ product.price }}
+    </button>
+
+    <a href="{% url 'index' %}" class="btn btn-outline-secondary btn-cancel">
+      Cancel
+    </a>
+
+  </div>
+</div>
+
+<!-- Hidden Verification Form -->
+<form id="verify-form" action="{% url 'razorpay_verify_single' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" id="razorpay_payment_id" name="razorpay_payment_id">
+  <input type="hidden" id="razorpay_order_id" name="razorpay_order_id" value="{{ razorpay_order_id }}">
+  <input type="hidden" id="razorpay_signature" name="razorpay_signature">
+</form>
+
+<style>
+.checkout-wrapper{
+    display:flex;
+    justify-content:center;
+    margin:60px 0;
+    padding:0 15px;
+}
+.checkout-card{
+    width:100%;
+    max-width:480px;
+    background:#ffffff;
+    padding:30px 28px;
+    border-radius:16px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.08);
+}
+.checkout-title{
+    color:#001f4d;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:20px;
+}
+.product-box{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    margin-bottom:22px;
+}
+.product-img{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+}
+.product-name{
+    color:#001f4d;
+    font-size:18px;
+    font-weight:600;
+}
+.product-price{
+    color:#44536b;
+    font-size:15px;
+    margin-top:4px;
+}
+.btn-pay{
+    width:100%;
+    background:#001f4d;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    color:white;
+    margin-top:10px;
+    transition:0.25s;
+}
+.btn-pay:hover{
+    background:#003080;
+}
+.btn-cancel{
+    width:100%;
+    margin-top:12px;
+    padding:12px;
+    border-radius:12px;
+    font-size:15px;
+}
+/* Responsive */
+@media (max-width: 576px){
+    .checkout-card{
+        padding:25px 18px;
+    }
+    .product-box{
+        flex-direction:column;
+        text-align:center;
+        gap:12px;
+    }
+    .product-img{
+        width:90px;
+        height:90px;
+    }
+}
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById('rzp-button').onclick = function(e){
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ amount_paise }}",
+        "currency": "INR",
+        "order_id": "{{ razorpay_order_id }}",
+        "handler": function (response){
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.getElementById('verify-form').submit();
+        }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

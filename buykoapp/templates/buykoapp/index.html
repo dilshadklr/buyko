@@ -1,0 +1,978 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buyko | Home</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <style>
+/* === Animated Search Bar === */
+/* Search Bar */
+/* -------------------------
+   SEARCH BAR
+------------------------- */
+.search-bar {
+  border-radius: 30px;
+  border: 2px solid #ccc;
+  padding-left: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-bar:focus {
+  border-color: #001f4d;
+  box-shadow: 0 0 10px rgba(0, 31, 77, 0.6);
+  transform: scale(1.01);
+  outline: none;
+}
+
+/* -------------------------
+   SEARCH BUTTON
+------------------------- */
+.search-btn {
+  background-color: #001f4d;
+  border-color: #001f4d;
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.4s ease-in-out;
+  font-weight: 500;
+}
+
+.search-btn:hover {
+  background-color: #003580;
+  border-color: #003580;
+  transform: scale(1.04);
+}
+
+/* -------------------------
+   NAV ICONS
+------------------------- */
+.navbar-icons i {
+  font-size: 1.6rem;
+  color: #001f4d;
+}
+
+.navbar-icons .cart-icon {
+  font-size: 1.8rem;
+}
+
+/* -------------------------
+   MOBILE VIEW FIX
+------------------------- */
+@media (max-width: 576px) {
+
+  .navbar {
+    padding: 5px 5px !important;
+  }
+
+  /* Logo smaller */
+  .navbar img {
+    width: 70px !important;
+    height: 26px !important;
+  }
+
+  /* Search form smaller */
+  .navbar form {
+    width: 42% !important;  /* shrink for icons to fit */
+  }
+
+  .search-bar {
+    padding: 3px 6px !important;
+    font-size: 12px !important;
+  }
+
+  .search-btn {
+    padding: 3px 10px !important;
+    font-size: 11px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Icon sizes */
+  .navbar-icons i {
+    font-size: 1.2rem !important;
+  }
+
+  .navbar-icons .cart-icon {
+    font-size: 1.4rem !important;
+  }
+
+  /* Reduce spacing */
+  .navbar-icons a {
+    margin-left: 6px !important;
+  }
+
+  /* Prevent icons going to next line */
+  .navbar-icons {
+    white-space: nowrap;
+  }
+}
+
+
+
+/* Banner */
+.banner {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(233, 228, 228, 0.43);
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Heading & Paragraph */
+.banner-heading {
+  font-size: 3.3rem;
+  color: #001f4d;
+}
+
+.banner-subtext {
+  font-size: 1.4rem;
+  color: #333;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+
+/* Banner Image */
+
+
+
+
+/* Banner container */
+.banner {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(233, 228, 228, 0.43);
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  min-height: 380px;       /* FIXED big height for mobile */
+}
+
+/* Heading */
+.banner-heading {
+  font-size: 3rem;
+  color: #001f4d;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Subtext */
+.banner-subtext {
+  font-size: 1.3rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Image */
+.banner-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  animation: float 3s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+/* Fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ========================================= */
+/*               RESPONSIVE SETUP            */
+/* ========================================= */
+
+@media (max-width: 992px) {
+  .banner-heading { font-size: 2.6rem; }
+  .banner-subtext { font-size: 1.2rem; }
+
+  .banner-img {
+    max-height: 330px;
+  }
+}
+
+/* Mobile (text left + image right remains same) */
+@media (max-width: 768px) {
+
+  .banner {
+    min-height: 360px;    /* Prevent shrinking on mobile */
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
+
+  .banner-row {
+    display: flex;
+    flex-direction: row;   /* FORCE left text + right image */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner-heading {
+    font-size: 2.2rem;
+  }
+
+  .banner-subtext {
+    font-size: 1.15rem;
+  }
+
+  .banner-img {
+    max-height: 280px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+
+  .banner {
+    min-height: 350px;   /* Keep height stable */
+  }
+
+  .banner-heading {
+    font-size: 1.9rem;
+  }
+
+  .banner-subtext {
+    font-size: 1.05rem;
+  }
+
+  .banner-img {
+    max-height: 240px;
+  }
+}
+
+
+
+/* Categories */
+.image-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  justify-content: center;
+  padding: 30px;
+  
+}
+.image-card {
+  text-align: center;
+  flex: 0 0 auto;
+  width: 150px;
+}
+.image-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #001f4d;
+  transition: transform 0.3s;
+}
+.image-card img:hover {
+  transform: scale(1.05);
+}
+.image-card span {
+  display: block;
+  font-weight: 600;
+  color: #001f4d;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+
+
+/* Main Card */
+/* Main Card */
+/* ===== CUSTOM HERO BANNER SIZE ===== */
+:root {
+    --hero-banner-width: 1200px;
+    --hero-banner-height: 500px;
+}
+/* =================================== */
+
+
+
+
+/* Desktop Banner Image */
+.hero-banner-img {
+    width: 90%;                  /* full width of container */
+    height: 500px;                /* fixed height for uniformity */
+    object-fit: cover;            /* crop to fit container without distortion */
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect */
+.hero-banner-img:hover {
+    transform: scale(1.01);
+}
+
+/* Fade Transition */
+#heroBannerCarousel .carousel-item {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out !important;
+}
+
+#heroBannerCarousel .carousel-item.active {
+    opacity: 1;
+}
+
+/* 📱 Mobile */
+@media (max-width: 576px) {
+    .hero-banner-img {
+        width: 90%;
+        height: 100px;           /* fixed height for mobile */
+        border-radius: 10px;
+        object-fit: cover;
+    }
+}
+
+/* 📱 Tablet */
+@media (max-width: 768px) {
+    .hero-banner-img {
+        width: 90%;
+        height: 200px;           /* fixed height for tablet */
+        border-radius: 10px;
+        object-fit: cover;
+    }
+}
+
+
+
+
+
+.new-title {
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #022d6c;
+}
+
+
+
+
+/* ===== Product Cards Styling ===== */
+/* ===== Product Card ===== */
+/* ===== Product Card ===== */
+.product-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* ===== Product Image ===== */
+.product-img {
+  width: 100%;
+  height: 260px;  /* fixed height for all images */
+  object-fit: cover; /* cover entire area */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.01);
+  
+}
+
+/* ===== Buttons ===== */
+.btn-cart, .btn-buy {
+  font-weight: 500;
+  font-size: 0.85rem;
+  border-radius: 50px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-cart {
+  border: 1px solid #001f4d;
+  color: #001f4d;
+  background: #fff;
+}
+.btn-cart:hover {
+  background-color: #001f4d;
+  color: #fff !important;
+  border-color: #001f4d;
+  transform: scale(1.05);
+}
+
+.btn-buy {
+  background: #001f4d;
+  border: none;
+  color: #fff;
+}
+.btn-buy:hover {
+  background: linear-gradient(90deg, #000000, #001934);
+  transform: scale(1.05);
+}
+
+/* ===== Headings ===== */
+.cart-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* ===== Responsive Grid ===== */
+
+/* Desktop: 5 cards per row */
+.col-lg-2-4 {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+/* Tablet: 3 cards per row */
+@media (max-width: 991px) {
+  .col-lg-2-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
+/* Mobile: 2 cards per row */
+@media (max-width: 576px) {
+  .col-6, .col-lg-2-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .product-img {
+    height: 200px; /* smaller image on mobile */
+  }
+}
+
+
+/* Cart Count Badge */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -5px;
+    background: rgb(228, 0, 0);
+    color: white;
+    padding: 1px 7px;
+    font-size: 12px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.cart-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #001f4d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+
+
+    .no-img-box {
+  width: 100%;
+  height: 260px;
+  background: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+  color: #555;
+  font-weight: 500;
+}
+
+.back-btn {
+  display: inline-flex;        /* flex for perfect centering */
+  align-items: center;         /* vertical center */
+  justify-content: center;     /* horizontal center */
+
+  border-radius: 50px;
+  font-weight: 500;
+  padding: 6px 30px;
+  background-color: #001f4d;
+  color: #eee !important;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+
+  margin-left: 10px;           /* ⭐ Added small gap on left side */
+}
+
+.back-btn:hover {
+  background-color: #002b6b;
+  color: #fff !important;
+  transform: translateX(-2px);
+}
+
+
+.auth-btn {
+    font-weight: 600;
+    color: #001f4d;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s ease;
+}
+
+.auth-btn:hover {
+    color: #00306e;
+    transform: translateY(-2px);
+}
+
+.icon-style {
+    font-size: 1.2rem;
+}
+
+
+
+  </style>
+</head>
+
+<body style="background-color:#ffffff;">
+
+
+<br><BR>
+
+  <!-- ===== Navbar ===== -->
+<nav class="navbar fixed-top" style="background-color:#ffffff;">
+  <BR><BR>
+  <div class="container-fluid">
+
+      <!-- LOGO -->
+      <a href="{% url 'index' %}">
+        <img src="{% static 'logo1.png' %}" alt="Buyko Logo" width="110" height="40">
+      </a>
+
+      <!-- SEARCH -->
+      <form method="GET" action="" class="d-flex justify-content-center mx-auto" 
+      role="search" style="width: 100%; max-width: 500px;">
+    
+    <input class="form-control search-bar me-2"
+           type="search"
+           name="q"
+           placeholder="Search products..."
+           value="{{ request.GET.q }}"
+           aria-label="Search">
+
+    <button class="btn btn-primary search-btn" type="submit">
+        Search
+    </button>
+</form>
+
+
+      <!-- ICONS -->
+      <div class="d-flex align-items-center navbar-icons">
+
+    <!-- HOME -->
+
+        <!-- ADMIN DASHBOARD -->
+
+ <a href="{% url 'admin_dashboard' %}" class="me-3 text-decoration-none" title="Admin Dashboard">
+        <i class="bi bi-gear-fill fs-3"></i>
+    </a>
+
+    <a href="{% url 'index' %}" class="me-3 text-decoration-none" title="Home">
+        <i class="bi bi-house-door-fill fs-3"></i>
+    </a>
+
+    <!-- CART -->
+    {% if user.is_authenticated %}
+    <a href="{% url 'cart' %}" class="position-relative me-3 text-decoration-none" title="Cart">
+        <i class="bi bi-cart-fill fs-3"></i>
+        {% if cart_count > 0 %}
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {% if cart_count > 9 %} 9+ {% else %} {{ cart_count }} {% endif %}
+        </span>
+        {% endif %}
+    </a>
+    {% endif %}
+
+
+
+    <!-- USER LOGIN / PROFILE -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'user_details' %}" class="text-decoration-none" title="User Profile">
+            <i class="bi bi-person-fill fs-3"></i>
+        </a>
+    {% else %}
+        <a href="{% url 'login_user' %}" class="ms-3 text-decoration-none auth-btn">
+            <i class="bi bi-box-arrow-in-right fs-2"></i> Login
+        </a>
+    {% endif %}
+
+</div>
+
+
+
+
+      </div> <!-- END ICONS -->
+
+  </div>
+</nav>
+
+
+
+{% block content %}
+
+
+{% if search_results %}
+<br><br>
+<div class="d-flex align-items-center mb-3">
+    <a href="{% url 'index' %}" class="btn btn-outline-primary me-3 back-btn">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+    <h3 class="cart-title m-0">Search Results</h3>
+</div>
+
+<br><br>
+
+<div class="row g-3">
+  {% for product in search_results %}
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="card product-card border-0 shadow-sm h-100">
+
+      {% if product.image %}
+      <img src="{{ product.image.url }}" class="product-img" alt="">
+      {% else %}
+      <div class="no-img-box">No Image</div>
+      {% endif %}
+
+      <div class="card-body text-center p-2">
+        <h6 class="product-title">{{ product.name }}</h6>
+        <p class="product-price">₹{{ product.price }}</p>
+
+        <div class="d-flex justify-content-center gap-2 mt-2">
+          
+          {# ---------------- CART BUTTON ---------------- #}
+          {% if user.is_authenticated %}
+              <a href="{% url 'add_to_cart' product.id %}" class="btn btn-cart px-3">
+                  <i class="bi bi-cart-plus"></i>
+              </a>
+          {% else %}
+              <a href="{% url 'login_user' %}?next={% url 'add_to_cart' product.id %}" 
+                 class="btn btn-cart px-3">
+                  <i class="bi bi-cart-plus"></i>
+              </a>
+          {% endif %}
+
+          {# ---------------- BUY BUTTON ---------------- #}
+          {% if user.is_authenticated %}
+              <a href="{% url 'razorpay_create_order' product.id %}" class="btn btn-buy px-3">
+                  Buy
+              </a>
+          {% else %}
+              <a href="{% url 'login_user' %}?next={% url 'cod_payment' product.id %}" 
+                 class="btn btn-buy px-3">
+                  Buy
+              </a>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+<hr class="mt-4">
+{% endif %}
+
+<!-- ===== Banner ===== -->
+{% load static %}
+
+<div class="container-fluid py-5 banner">
+  <div class="row align-items-center banner-row">
+
+    <!-- Left Text Section -->
+    <div class="col-6 text-start px-3 px-md-5 banner-text">
+
+      <h1 class="fw-bold mb-3 banner-heading">
+        Welcome to <span class="text-primary">Buyko</span>
+      </h1>
+
+      <p class="lead mb-3 banner-subtext">
+        Shop the best deals across fashion, tech, and more!
+      </p>
+
+    </div>
+
+    <!-- Right Image Section -->
+    <div class="col-6 text-center banner-image">
+      <img src="{% static 'bannerimg.png' %}" class="img-fluid banner-img" alt="Fashion">
+    </div>
+
+  </div>
+</div>
+<br>
+
+
+
+<h2 class="cart-title">new products</h2>
+
+<br>
+
+
+
+
+<div id="heroBannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
+  <div class="carousel-inner">
+
+    {% for banner in banners %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <img src="{{ banner.image.url }}" class="hero-banner-img">
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroBannerCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+
+  <button class="carousel-control-next" type="button" data-bs-target="#heroBannerCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+
+</div>
+
+
+
+
+<br><br><br><br>
+
+
+
+
+  <!-- ===== Category Section ===== -->
+
+<div style="background-color:#ffffff;">
+  <h2 class="cart-title">category</h2>
+  <div class="container-fluid">
+    <div class="image-row">
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Fashion' %}"><img src="{% static 'fashion.png' %}" alt="Fashion"></a>
+        <span>Fashion</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Mobiles & Tablets' %}"><img src="{% static '7.png' %}" alt="Mobiles & Tablets"></a>
+        <span>Mobiles & Tablets</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'TV & Accessories' %}"><img src="{% static '8.png' %}" alt="TV & Accessories"></a>
+        <span>TV & Accessories</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Electronics' %}"><img src="{% static 'electronics.png' %}" alt="Electronics"></a>
+        <span>Electronics</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Grocery' %}"><img src="{% static 'grocery2.png' %}" alt="Grocery"></a>
+        <span>Grocery</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Beauty' %}"><img src="{% static '4.png' %}" alt="Beauty"></a>
+        <span>Beauty</span>
+      </div>
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Home Appliances' %}"><img src="{% static '2.png' %}" alt="Home Appliances"></a>
+        <span>Home Appliances</span>
+      </div>
+
+
+      <div class="image-card">
+        <a href="{% url 'category_page' 'Sports & Fitness' %}"><img src="{% static '1.png' %}" alt="Sports & Fitness"></a>
+        <span>Sports & Fitness</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+ <br><br>
+ <!-- ===== Product Listing Section ===== -->
+<!-- ====== Product Section ====== -->
+
+<div class="row g-4 justify-content-center"><br>
+  <h2 class="cart-title">latest products</h2>
+<br>
+  {% for product in products %}
+  <div class="col-6 col-lg-2-4"> <!-- custom class for 5 cards -->
+    <div class="card product-card border-0 shadow-lg h-100">
+
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+      {% else %}
+        <img src="{% static 'no_image.png' %}" class="card-img-top product-img" alt="No Image">
+      {% endif %}
+
+      <div class="card-body text-center p-3 d-flex flex-column justify-content-between">
+        <div>
+          <h5 class="card-title fw-bold">{{ product.name }}</h5>
+          <p class="text-muted small mb-1">{{ product.category }}</p>
+          <p class="fw-bold text-success fs-6 mb-0">₹{{ product.price }}</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          {% if user.is_authenticated %}
+<a href="{% url 'add_to_cart' product.id %}" class="btn btn-outline-dark btn-cart px-3 py-1 d-flex align-items-center">
+    <i class="bi bi-cart-fill me-2"></i>
+    Add to Cart
+</a>
+{% else %}
+<a href="{% url 'login_user' %}" class="btn btn-outline-dark btn-cart px-3 py-1 d-flex align-items-center">
+    <i class="bi bi-cart-fill me-2"></i>
+    Login to Add
+</a>
+{% endif %}
+
+
+         {% if user.is_authenticated %}
+    <!-- Logged-in: direct buy -->
+    <a href="{% url 'razorpay_create_order' product.id %}" class="btn btn-primary btn-buy px-3 py-1">
+        Buy
+    </a>
+{% else %}
+    <!-- Not logged-in: redirect to login → after login redirect back to buy -->
+    <a href="{% url 'login_user' %}?next={% url 'razorpay_create_order' product.id %}" 
+       class="btn btn-primary btn-buy px-3 py-1">
+        Buy
+    </a>
+{% endif %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% empty %}
+    <p class="text-center text-muted">No products available.</p>
+  {% endfor %}
+</div>
+
+    {% endblock %}
+
+
+<!-- ====== Footer Section ====== -->
+<!-- ====== Footer Section ====== -->
+<footer class="text-center text-lg-start text-white mt-5" style="background-color: #001f4d;">
+  <div class="container p-4 pb-0">
+
+    <div class="row">
+
+      <!-- About Section -->
+      <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3 text-start">
+        <h5 class="text-uppercase mb-4 font-weight-bold">🛍️ Buyko</h5>
+        <p>
+          Buyko is your one-stop shop for Fashion, Electronics, Mobiles, and more.
+          Discover top deals and enjoy secure shopping — anytime, anywhere.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-start">
+        <h5 class="text-uppercase mb-4 font-weight-bold">Quick Links</h5>
+
+        <p><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></p>
+        <p><a href="#" class="text-white text-decoration-none">Account</a></p>
+      </div>
+
+      <!-- Categories -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-start">
+        <h5 class="text-uppercase mb-4 font-weight-bold">Categories</h5>
+
+        <p><a href="{% url 'category_page' 'Fashion' %}" class="text-white text-decoration-none">Fashion</a></p>
+        <p><a href="{% url 'category_page' 'Mobiles & Tablets' %}" class="text-white text-decoration-none">Mobiles & Tablets</a></p>
+        <p><a href="{% url 'category_page' 'Electronics' %}" class="text-white text-decoration-none">Electronics</a></p>
+        <p><a href="{% url 'category_page' 'Home Appliances' %}" class="text-white text-decoration-none">Home Appliances</a></p>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 text-start">
+        <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+
+        <p><i class="bi bi-geo-alt-fill me-2"></i> India</p>
+        <p><i class="bi bi-envelope-fill me-2"></i> support@buyko.com</p>
+        <p><i class="bi bi-phone-fill me-2"></i> +91 98765 43210</p>
+      </div>
+
+    </div>
+
+    <hr class="my-3">
+
+    <!-- Social Media -->
+    <div class="text-center mb-3">
+      <a href="https://facebook.com" class="text-white me-4"><i class="bi bi-facebook"></i></a>
+      <a href="https://twitter.com" class="text-white me-4"><i class="bi bi-twitter"></i></a>
+      <a href="https://instagram.com" class="text-white me-4"><i class="bi bi-instagram"></i></a>
+      <a href="https://linkedin.com" class="text-white me-4"><i class="bi bi-linkedin"></i></a>
+      <a href="https://youtube.com" class="text-white me-4"><i class="bi bi-youtube"></i></a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0,0,0,0.2);">
+      © 2025 Buyko | All Rights Reserved.
+    </div>
+
+  </div>
+</footer>
+
+
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+   
+
+
+
+
+
+
+
+
+

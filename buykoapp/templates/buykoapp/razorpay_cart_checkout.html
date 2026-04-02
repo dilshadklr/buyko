@@ -1,0 +1,120 @@
+{% extends "buykoapp/index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="checkout-card mx-auto shadow-lg p-4">
+
+        <h3 class="checkout-title text-center mb-4">Checkout Payment</h3>
+
+        <ul class="list-group mb-3">
+            {% for item in cart_items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    {{ item.product.name }} × {{ item.quantity }}
+                </div>
+                <strong>₹{{ item.product.price|floatformat:2 }}</strong>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h4 class="text-end mb-3">Total: ₹{{ total_amount }}</h4>
+
+        <button id="pay-btn" class="btn-pay mb-2">
+            Pay ₹{{ total_amount }}
+        </button>
+
+        <a href="{% url 'cart' %}" class="btn btn-outline-secondary btn-cancel">
+            Cancel
+        </a>
+
+    </div>
+</div>
+
+<!-- Hidden Verification Form -->
+<form id="razorpay-form" method="POST" action="{% url 'razorpay_verify' %}">
+    {% csrf_token %}
+    <input type="hidden" id="razorpay_payment_id" name="razorpay_payment_id">
+    <input type="hidden" id="razorpay_order_id" name="razorpay_order_id" value="{{ razorpay_order_id }}">
+    <input type="hidden" id="razorpay_signature" name="razorpay_signature">
+</form>
+
+<style>
+.checkout-card {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 28px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    margin: auto;
+}
+.checkout-title {
+    color: #001f4d;
+    font-weight: 700;
+}
+.list-group-item {
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 15px;
+    color: #001f4d;
+}
+.btn-pay {
+    width: 100%;
+    background: #001f4d;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    transition: 0.25s;
+}
+.btn-pay:hover {
+    background: #003080;
+}
+.btn-cancel {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 15px;
+}
+@media (max-width: 576px){
+    .checkout-card{
+        padding: 25px 18px;
+    }
+    .list-group-item{
+        font-size: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById("pay-btn").onclick = function(e) {
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ amount_paise }}",
+        "currency": "INR",
+        "name": "Buyko Cart Checkout",
+        "description": "Cart Payment",
+        "order_id": "{{ razorpay_order_id }}",
+        "handler": function (response){
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.getElementById('razorpay-form').submit();
+        }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

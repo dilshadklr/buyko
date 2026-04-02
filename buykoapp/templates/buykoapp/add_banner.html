@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Banners</title>
+
+    <!-- Inline CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        h2, h3 {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        form {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        /* TABLE STYLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        table th {
+            background: #007bff;
+            color: white;
+        }
+
+        img.banner-img {
+            height: 80px;
+            width: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Upload New Banner</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn-success">Upload Banner</button>
+    </form>
+
+
+    <h3>Uploaded Banners</h3>
+
+    {% if banners %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Preview</th>
+            <th>Title</th>
+            <th>Action</th>
+        </tr>
+
+        {% for b in banners %}
+        <tr>
+            <td>{{ b.id }}</td>
+            <td><img src="{{ b.image.url }}" class="banner-img"></td>
+            <td>{{ b.title }}</td>
+            <td>
+                <a href="{% url 'delete_banner' b.id %}" 
+                   class="btn-danger"
+                   onclick="return confirm('Delete this banner?');">
+                    Remove
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+        <p>No banners uploaded yet.</p>
+    {% endif %}
+
+</div>
+</body>
+</html>

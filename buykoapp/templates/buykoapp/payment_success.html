@@ -1,0 +1,89 @@
+{% extends "buykoapp/index.html" %}
+{% block content %}
+
+<style>
+.payment-wrapper {
+    max-width: 550px;
+    margin: 80px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Success Icon */
+.success-icon {
+    font-size: 85px;
+    color: #28a745;
+    margin-bottom: 15px;
+    animation: pop 0.6s ease-out;
+}
+
+/* Title */
+.payment-title {
+    color: #001F4D;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+/* Amount Box */
+.amount-box {
+    background: #f5f7fa;
+    padding: 12px;
+    border-radius: 12px;
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #001F4D;
+}
+
+/* Buttons */
+.shop-btn {
+    width: 100%;
+    padding: 12px;
+    background: #001F4D;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    transition: 0.25s;
+}
+
+.shop-btn:hover {
+    background: #003080;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+    0% { transform: scale(0.2); opacity: 0; }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+</style>
+
+
+<div class="payment-wrapper">
+    
+    <i class="bi bi-check-circle-fill success-icon"></i>
+
+    <h2 class="payment-title">Payment Successful</h2>
+
+    <div class="amount-box">
+        Amount Paid: ₹{{ order.total_amount }}
+    </div>
+
+    <a href="{% url 'index' %}">
+        <button class="shop-btn">Continue Shopping</button>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends "buykoapp/index.html" %}
+
+{% block content %}
+
+<style>
+/* ========= PROFILE CARD WRAPPER ========= */
+.profile-container {
+    max-width: 850px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+/* ========= TOP HEADER SECTION ========= */
+.profile-header {
+    background: linear-gradient(135deg, #001f4d 0%, #3a7bd5 100%);
+    padding: 40px 30px;
+    color: white;
+    text-align: center;
+}
+
+.profile-header .profile-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #ffd700;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.profile-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.profile-header p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* ========= DETAIL SECTION ========= */
+.profile-body {
+    padding: 30px;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #001f4d;
+}
+
+.detail-box {
+    margin-bottom: 18px;
+}
+
+.field-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.field-value {
+    font-size: 1rem;
+    background: #f2f6ff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #dce6ff;
+}
+
+/* ========= BUTTONS ========= */
+.btn-area {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.btn-custom {
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-edit {
+    background-color: #ffd700;
+    color: #001f4d;
+}
+.btn-edit:hover {
+    background-color: #ffc107;
+    transform: scale(1.05);
+}
+
+.btn-logout {
+    background-color: #ff4c4c;
+    color: white;
+}
+.btn-logout:hover {
+    background-color: #ff1c1c;
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .profile-header h2 {
+        font-size: 1.6rem;
+    }
+    .profile-body {
+        padding: 20px;
+    }
+}
+</style>
+
+<!-- ========== PROFILE CARD ========== -->
+<div class="profile-container">
+
+    <!-- TOP HEADER -->
+    <div class="profile-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img" alt="Profile">
+
+        <h2>{{ user.username }} </h2>
+        <p><i class="bi bi-envelope"></i> {{ user.email }}</p>
+    </div>
+
+    <!-- BODY -->
+    <div class="profile-body">
+
+        <h3 class="section-title">Account Information</h3>
+
+        <div class="detail-box">
+            <label class="field-label">Username</label>
+            <div class="field-value">{{ user.username }}</div>
+        </div>
+
+        <div class="detail-box">
+            <label class="field-label">Mobile Number</label>
+            <div class="field-value">{{ user.userprofile.mobile }}</div>
+        </div>
+
+        <div class="detail-box">
+            <label class="field-label">Gender</label>
+            <div class="field-value">{{ user.userprofile.gender }}</div>
+        </div>
+
+        <div class="detail-box">
+            <label class="field-label">Address</label>
+            <div class="field-value">{{ user.userprofile.address }}</div>
+        </div>
+
+        <div class="detail-box">
+            <label class="field-label">Date Joined</label>
+            <div class="field-value">{{ user.date_joined|date:"d M Y H:i" }}</div>
+        </div>
+
+        <div class="detail-box">
+            <label class="field-label">Last Login</label>
+            <div class="field-value">{{ user.last_login|date:"d M Y H:i" }}</div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btn-area">
+            <a href="{% url 'edit_profile' %}" class="btn-custom btn-edit">
+                <i class="bi bi-pencil-square"></i> Edit Profile
+            </a>
+            <a href="{% url 'logout_user' %}" class="btn-custom btn-logout">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

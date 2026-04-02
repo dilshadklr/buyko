@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Register | Buyko</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --brand-1:#001f4d;
+            --brand-2:#003d99;
+            --card-bg:#ffffff;
+            --muted:#777;
+        }
+        *{box-sizing:border-box}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-wrap {
+            width: 100%;
+            max-width: 520px;
+            padding: 28px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+            box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+            text-align: center;
+            margin: 24px;
+        }
+
+        .brand {
+            margin-bottom: 10px;
+        }
+        .brand img {
+            height: 64px;          /* adjust as needed */
+            object-fit: contain;
+        }
+        .brand h1 {
+            margin: 6px 0 0;
+            font-size: 18px;
+            color: var(--brand-1);
+            letter-spacing: 0.4px;
+        }
+
+        h2 {
+            margin: 10px 0 6px;
+            font-size: 26px;
+            color: var(--brand-1);
+        }
+
+        .lead {
+            color: var(--muted);
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]{
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1.8px solid #e6e6e6;
+            font-size: 15px;
+            transition: box-shadow .18s, border-color .18s, transform .08s;
+            background: #fff;
+        }
+        input:focus{
+            outline: none;
+            border-color: var(--brand-1);
+            box-shadow: 0 6px 18px rgba(0,31,77,0.12);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 0;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, #011e3d, #001330);
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        .btn-primary:hover { transform: translateY(-3px); }
+
+        .small {
+            display: inline-block;
+            margin-top: 14px;
+            text-align:center;
+            color: var(--brand-1);
+            font-weight:600;
+            text-decoration: none;
+        }
+
+        .helper {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        @media (max-width:720px){
+            .auth-wrap{ padding:18px; max-width:420px }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+  <div class="auth-wrap">
+      <!-- LOGO (change path if needed) -->
+      <div class="brand">
+          <img src="{% static 'logo1.png' %}" alt="Buyko logo">
+         
+      </div>
+
+      <h2>Create your account</h2>
+      <p class="lead">Join Buyko — fast checkout, exclusive deals.</p>
+
+      <form method="POST" novalidate>
+    {% csrf_token %}
+    <div class="grid">
+
+        <div class="full">
+            <input type="text" name="name" placeholder="Full name" required>
+        </div>
+
+        <div class="full">
+            <input type="email" name="email" placeholder="Email address" required>
+        </div>
+
+        <div>
+            <input type="text" name="mobile" placeholder="Mobile number" required>
+        </div>
+
+        <div>
+            <select name="gender" required style="width:100%;padding:12px;border-radius:10px;border:1.8px solid #e6e6e6;">
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="full">
+            <textarea name="address" placeholder="Enter full address this address used to your orders" rows="3"
+                style="width:100%;padding:12px;border-radius:10px;border:1.8px solid #e6e6e6;"></textarea>
+        </div>
+
+        <div>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <div>
+            <input type="password" name="confirm_password" placeholder="Confirm password" required>
+        </div>
+
+        <div class="full">
+            <button type="submit" class="btn-primary">Register</button>
+        </div>
+    </div>
+
+  <center>  <a class="small" href="{% url 'login_user' %}">Already have an account? Login</a></center>
+</form>
+
+  </div>
+
+</body>
+</html>

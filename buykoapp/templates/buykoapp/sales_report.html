@@ -1,0 +1,203 @@
+{# buykoapp/templates/buykoapp/sales_report.html #}
+{% extends "buykoapp/index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- HEADER -->
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-6">
+      <h2 class="cart-title">Sales Report</h2>
+      <p class="text-muted">View sales summary and top products. Use date range to filter.</p>
+    </div>
+
+    <div class="col-md-6 text-md-end">
+      <form class="d-inline-flex gap-2" method="get" style="align-items:center;">
+        <label class="small text-muted me-1">From</label>
+        <input type="date" name="start" class="form-control form-control-sm" value="{{ start }}">
+
+        <label class="small text-muted ms-2 me-1">To</label>
+        <input type="date" name="end" class="form-control form-control-sm" value="{{ end }}">
+
+        <button class="btn btn-primary btn-sm ms-2" type="submit">Filter</button>
+
+        <a href="{% url 'sales_report_pdf' %}?start={{ start }}&end={{ end }}"
+           class="btn btn-outline-dark btn-sm ms-2">
+          <i class="bi bi-file-earmark-pdf"></i> Download PDF
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card p-3 text-center">
+        <a href="#ordersitems" class="text-muted">Total Orders</a>
+        <h3>{{ total_orders }}</h3>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 text-center">
+        <h6 class="text-muted">Total Quantity Sold</h6>
+        <h3>{{ total_qty }}</h3>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 text-center">
+        <h6 class="text-muted">Total Income</h6>
+        <h3>₹{{ total_income|floatformat:2 }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📊 GRAPH SECTION -->
+  <div class="card p-4 mb-4">
+    <h5 class="mb-3">Sales Graph</h5>
+    <canvas id="salesChart" height="120"></canvas>
+  </div>
+
+  <!-- TOP PRODUCTS TABLE -->
+  <div class="card p-3 mb-4">
+    <h5 class="mb-3">Top Sold Products</h5>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Quantity Sold</th>
+            <th>Revenue (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in top_products %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td class="text-start">{{ p.name }}</td>
+            <td>{{ p.quantity_sold }}</td>
+            <td>₹{{ p.revenue|floatformat:2 }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">No sales found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ORDERS LIST -->
+ <div class="card p-3">
+  <h5 class="mb-3">Orders in Range</h5>
+
+  <div id="ordersitems"  class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Address</th> <!-- ✅ NEW -->
+          <th>Products</th>
+          <th>Amount</th>
+          <th>Paid</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders_qs %}
+        <tr>
+          <td>#{{ order.id }}</td>
+          <td>{{ order.user.username }}</td>
+          <td>{{ order.user.email }}</td>
+
+          <!-- ✅ USER ADDRESS -->
+          <td class="text-start">
+            {% if order.user.userprofile.address %}
+              {{ order.user.userprofile.address }}
+            {% else %}
+              <em>No address</em>
+            {% endif %}
+          </td>
+
+          <td class="text-start">
+            {% for item in order.items.all %}
+              {{ item.product.name }} (x{{ item.quantity }})<br>
+            {% endfor %}
+          </td>
+
+          <td>₹{{ order.total_amount }}</td>
+          <td>
+            {% if order.paid %}
+              <span class="badge bg-success">Yes</span>
+            {% else %}
+              <span class="badge bg-danger">No</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7">No orders found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</div>
+
+<!-- ✅ SAFE JSON DATA -->
+{{ product_labels|json_script:"labels-data" }}
+{{ product_qty|json_script:"qty-data" }}
+{{ product_revenue|json_script:"revenue-data" }}
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const labels = JSON.parse(
+    document.getElementById("labels-data").textContent
+  );
+
+  const qtyData = JSON.parse(
+    document.getElementById("qty-data").textContent
+  );
+
+  const revenueData = JSON.parse(
+    document.getElementById("revenue-data").textContent
+  );
+
+  const ctx = document.getElementById("salesChart").getContext("2d");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Quantity Sold",
+          data: qtyData,
+        },
+        {
+          label: "Revenue (₹)",
+          data: revenueData,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+
+{% endblock %}

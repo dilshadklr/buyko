@@ -1,0 +1,171 @@
+{% extends "buykoapp/index.html" %}
+{% load static %}
+{% block content %}
+
+<!-- ===== CATEGORY PAGE ===== -->
+<div class="container my-5">
+  <h2 class="cart-title text-center">{{ category_name }}</h2>
+
+  <!-- Back Button -->
+  <div class="text-center mb-5">
+    <a href="{% url 'index' %}" class="btn btn-secondary btn-back px-4 py-2 rounded-pill">
+      <i class="bi bi-arrow-left me-2"></i> Back to Home
+    </a>
+  </div>
+
+  {% if products %}
+  <!-- Products Grid -->
+<div class="row g-4 justify-content-center"><br>
+<br>
+  {% for product in products %}
+  <div class="col-6 col-lg-2-4"> <!-- custom class for 5 cards -->
+    <div class="card product-card border-0 shadow-lg h-100">
+
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+      {% else %}
+        <img src="{% static 'no_image.png' %}" class="card-img-top product-img" alt="No Image">
+      {% endif %}
+
+      <div class="card-body text-center p-3 d-flex flex-column justify-content-between">
+        <div>
+          <h5 class="card-title fw-bold">{{ product.name }}</h5>
+          <p class="text-muted small mb-1">{{ product.category }}</p>
+          <p class="fw-bold text-success fs-6 mb-0">₹{{ product.price }}</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mt-3">
+
+  {# ---------- ADD TO CART BUTTON ---------- #}
+  {% if user.is_authenticated %}
+      <a href="{% url 'add_to_cart' product.id %}" 
+         class="btn btn-outline-dark btn-cart px-3 py-1">
+        <i class="bi bi-cart-fill me-1"></i>Add
+      </a>
+  {% else %}
+      <a href="{% url 'login_user' %}?next={% url 'add_to_cart' product.id %}" 
+         class="btn btn-outline-dark btn-cart px-3 py-1">
+        <i class="bi bi-cart-fill me-1"></i>Add
+      </a>
+  {% endif %}
+
+
+  {# ---------- BUY BUTTON ---------- #}
+ {% if user.is_authenticated %}
+              <a href="{% url 'razorpay_create_order' product.id %}" class="btn btn-buy px-3">
+                  Buy
+              </a>
+          {% else %}
+              <a href="{% url 'login_user' %}?next={% url 'cod_payment' product.id %}" 
+                 class="btn btn-buy px-3">
+                  Buy
+              </a>
+          {% endif %}
+
+
+</div>
+
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <p class="text-center text-muted fs-5 mt-5">No products found in this category.</p>
+  {% endif %}
+</div>
+
+<!-- ===== CATEGORY CSS ===== -->
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+h2.cart-title {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+/* ===== Product Card ===== */
+.product-card {
+  transition: all 0.4s ease;
+  border-radius: 15px;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  border: none;
+  height: 260px;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.product-img {
+  height: 230px;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.product-card:hover .product-img {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* ===== Buttons ===== */
+.btn-cart, .btn-buy {
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+}
+.btn-back {
+  color: #ffffff;
+  background-color: #001f4d;
+}
+/* Cart Button */
+.btn-cart {
+  border: 1px solid #27292d;
+  color: #001f4d;
+  background: #fff;
+}
+.btn-cart:hover {
+  background-color: #001f4d;
+  color: #fff !important;
+  border-color: #001f4d;
+  transform: scale(1.05);
+}
+
+/* Buy Now Button */
+.btn-buy {
+  background: linear-gradient(90deg, #001f4d, #0f051d);
+  border: none;
+  color: #fff;
+}
+.btn-buy:hover {
+  background: linear-gradient(90deg, #12012e, #07101b);
+  transform: scale(1.05);
+}
+
+/* Back Button */
+.btn-back:hover {
+  background-color: #001f4d;
+  color: #fff !important;
+  transform: scale(1.05);
+}
+
+/* Smooth container animation */
+.container {
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+{% endblock %}
