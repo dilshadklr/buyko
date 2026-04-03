@@ -12,8 +12,20 @@
   <link rel="stylesheet" href="{% static 'style.css' %}">
 
   <style>
-/* === Animated Search Bar === */
-/* Search Bar */
+
+/* -------------------------
+   SEARCH BAR
+------------------------- */
+/* -------------------------
+   NAVBAR LAYOUT FIX
+------------------------- */
+.navbar .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
 /* -------------------------
    SEARCH BAR
 ------------------------- */
@@ -50,8 +62,24 @@
 }
 
 /* -------------------------
+   SEARCH FORM FLEX
+------------------------- */
+.navbar form {
+  flex: 1;
+  margin: 0 10px;
+  max-width: 500px;
+}
+
+/* -------------------------
    NAV ICONS
 ------------------------- */
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .navbar-icons i {
   font-size: 1.6rem;
   color: #001f4d;
@@ -61,106 +89,70 @@
   font-size: 1.8rem;
 }
 
+.navbar-icons a {
+  margin-left: 10px;
+}
+
 /* -------------------------
    MOBILE VIEW FIX
 ------------------------- */
 @media (max-width: 576px) {
 
   .navbar {
-    padding: 5px 5px !important;
+    padding: 5px 6px !important;
+  }
+
+  .navbar .container-fluid {
+    flex-wrap: nowrap;
   }
 
   /* Logo smaller */
   .navbar img {
-    width: 70px !important;
-    height: 26px !important;
+    width: 65px !important;
+    height: 24px !important;
   }
 
-  /* Search form smaller */
+  /* Search shrink */
   .navbar form {
-    width: 42% !important;  /* shrink for icons to fit */
+    max-width: 45% !important;
+    margin: 0 5px !important;
   }
 
   .search-bar {
-    padding: 3px 6px !important;
+    padding: 4px 6px !important;
     font-size: 12px !important;
   }
 
   .search-btn {
-    padding: 3px 10px !important;
+    padding: 3px 8px !important;
     font-size: 11px !important;
     border-radius: 20px !important;
   }
 
-  /* Icon sizes */
+  /* Icons smaller */
   .navbar-icons i {
     font-size: 1.2rem !important;
   }
 
   .navbar-icons .cart-icon {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
   }
 
-  /* Reduce spacing */
   .navbar-icons a {
     margin-left: 6px !important;
   }
-
-  /* Prevent icons going to next line */
-  .navbar-icons {
-    white-space: nowrap;
-  }
 }
 
-
-
-/* Banner */
-.banner {
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgba(233, 228, 228, 0.43);
-  overflow: hidden;
-  animation: fadeIn 1s ease-in-out;
-}
-
-/* Heading & Paragraph */
-.banner-heading {
-  font-size: 3.3rem;
-  color: #001f4d;
-}
-
-.banner-subtext {
-  font-size: 1.4rem;
-  color: #333;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-
-
-
-/* Banner Image */
-
-
-
-
-/* Banner container */
+/* =========================
+   BANNER SECTION
+========================= */
 .banner {
   background: #ffffff;
   box-shadow: 0 4px 20px rgba(233, 228, 228, 0.43);
   overflow: hidden;
   animation: fadeIn 1s ease-in-out;
 
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-
-  min-height: 380px;       /* FIXED big height for mobile */
+  padding: 30px 15px;
 }
 
 /* Heading */
@@ -181,13 +173,13 @@
 /* Image */
 .banner-img {
   width: 100%;
-  max-height: 360px;
+  max-height: 320px;
   object-fit: contain;
   animation: float 3s ease-in-out infinite;
   opacity: 0.95;
 }
 
-/* Fade-in */
+/* Fade animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -196,74 +188,72 @@
 /* Floating animation */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
 }
 
-/* ========================================= */
-/*               RESPONSIVE SETUP            */
-/* ========================================= */
-
+/* =========================
+   TABLET
+========================= */
 @media (max-width: 992px) {
-  .banner-heading { font-size: 2.6rem; }
-  .banner-subtext { font-size: 1.2rem; }
+
+  .banner-heading {
+    font-size: 2.3rem;
+  }
+
+  .banner-subtext {
+    font-size: 1.1rem;
+  }
 
   .banner-img {
-    max-height: 330px;
+    max-height: 260px;
   }
 }
 
-/* Mobile (text left + image right remains same) */
-@media (max-width: 768px) {
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 576px) {
 
   .banner {
-    min-height: 360px;    /* Prevent shrinking on mobile */
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding: 15px 10px;
   }
 
   .banner-row {
     display: flex;
-    flex-direction: row;   /* FORCE left text + right image */
-    justify-content: center;
     align-items: center;
   }
 
   .banner-heading {
-    font-size: 2.2rem;
+    font-size: 1.4rem;
+    margin-bottom: 5px;
   }
 
   .banner-subtext {
-    font-size: 1.15rem;
+    font-size: 0.8rem;
+    margin-bottom: 0;
   }
 
   .banner-img {
-    max-height: 280px;
+    max-height: 140px;
   }
+
+/* banner text spacing fix */
+.banner-text {
+  padding-left: 25px;
 }
 
-/* Small Mobile */
-@media (max-width: 480px) {
-
-  .banner {
-    min-height: 350px;   /* Keep height stable */
+/* Mobile */
+@media (max-width: 576px) {
+  .banner-text {
+    padding-left: 12px !important;
   }
-
-  .banner-heading {
-    font-size: 1.9rem;
-  }
-
-  .banner-subtext {
-    font-size: 1.05rem;
-  }
-
-  .banner-img {
-    max-height: 240px;
-  }
+}
 }
 
 
-
-/* Categories */
+/* =========================
+   CATEGORY SECTION
+========================= */
 .image-row {
   display: flex;
   flex-wrap: nowrap;
@@ -271,13 +261,20 @@
   gap: 20px;
   justify-content: center;
   padding: 30px;
-  
+  scroll-behavior: smooth;
 }
+
+/* Hide scrollbar */
+.image-row::-webkit-scrollbar {
+  display: none;
+}
+
 .image-card {
   text-align: center;
   flex: 0 0 auto;
   width: 150px;
 }
+
 .image-card img {
   width: 100%;
   height: auto;
@@ -285,9 +282,11 @@
   border: 1px solid #001f4d;
   transition: transform 0.3s;
 }
+
 .image-card img:hover {
   transform: scale(1.05);
 }
+
 .image-card span {
   display: block;
   font-weight: 600;
@@ -296,10 +295,46 @@
   margin-top: 8px;
 }
 
+/* =========================
+   MOBILE VIEW (4 ITEMS)
+========================= */
+@media (max-width: 576px) {
+
+  .image-row {
+    gap: 10px;
+    padding: 15px 10px;
+    justify-content: flex-start;
+  }
+
+  .image-card {
+    width: 22%;   /* 4 items per row */
+    min-width: 80px;
+  }
+
+  .image-card img {
+    border-radius: 8px;
+  }
+
+  .image-card span {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+}
 
 
 /* Main Card */
 /* Main Card */
+
+
+
+
+
+
+
+
+
+
 /* ===== CUSTOM HERO BANNER SIZE ===== */
 :root {
     --hero-banner-width: 1200px;
@@ -310,50 +345,76 @@
 
 
 
-/* Desktop Banner Image */
+
+
+
+
+/* =========================
+   HERO BANNER CAROUSEL
+========================= */
+#heroBannerCarousel {
+  padding: 10px 0;
+}
+
 .hero-banner-img {
-    width: 90%;                  /* full width of container */
-    height: 500px;                /* fixed height for uniformity */
-    object-fit: cover;            /* crop to fit container without distortion */
-    border-radius: 12px;
-    display: block;
-    margin: 0 auto;
-    transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 1100px;   /* limit desktop width */
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
 }
 
-/* Hover Effect */
 .hero-banner-img:hover {
-    transform: scale(1.01);
+  transform: scale(1.01);
 }
 
-/* Fade Transition */
+/* Fade effect */
 #heroBannerCarousel .carousel-item {
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out !important;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out !important;
 }
 
 #heroBannerCarousel .carousel-item.active {
-    opacity: 1;
+  opacity: 1;
 }
 
-/* 📱 Mobile */
-@media (max-width: 576px) {
-    .hero-banner-img {
-        width: 90%;
-        height: 100px;           /* fixed height for mobile */
-        border-radius: 10px;
-        object-fit: cover;
-    }
-}
-
-/* 📱 Tablet */
+/* =========================
+   TABLET
+========================= */
 @media (max-width: 768px) {
-    .hero-banner-img {
-        width: 90%;
-        height: 200px;           /* fixed height for tablet */
-        border-radius: 10px;
-        object-fit: cover;
-    }
+
+  .hero-banner-img {
+    max-width: 95%;
+    height: 220px;
+    border-radius: 10px;
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 576px) {
+
+  #heroBannerCarousel {
+    padding: 5px 0;
+  }
+
+  .hero-banner-img {
+    width: 95%;
+    height: 120px;
+    border-radius: 8px;
+  }
+
+  /* hide arrows mobile */
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
 }
 
 
@@ -436,10 +497,17 @@
 
 /* ===== Headings ===== */
 .cart-title {
-  text-align: center;
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #001f4d;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .cart-title {
+    font-size: 16px !important;
+    margin: 8px 0 !important;
+  }
 }
 
 /* ===== Responsive Grid ===== */
@@ -551,6 +619,72 @@
 
 
 
+/* =========================
+   FOOTER
+========================= */
+footer {
+  font-size: 15px;
+}
+
+footer h5 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+footer p {
+  margin-bottom: 8px;
+}
+
+footer a {
+  font-size: 14px;
+}
+
+/* Social icons */
+footer .bi {
+  font-size: 18px;
+}
+
+/* =========================
+   MOBILE VIEW
+========================= */
+@media (max-width: 576px) {
+
+  footer {
+    font-size: 12px !important;
+  }
+
+  footer h5 {
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
+  }
+
+  footer p {
+    margin-bottom: 5px !important;
+  }
+
+  footer a {
+    font-size: 12px !important;
+  }
+
+  footer .bi {
+    font-size: 14px !important;
+  }
+
+  /* reduce padding */
+  footer .container {
+    padding: 15px !important;
+  }
+
+  footer .row > div {
+    margin-bottom: 15px;
+  }
+
+  /* center mobile */
+  footer .text-start {
+    text-align: center !important;
+  }
+
+}
   </style>
 </head>
 
@@ -561,7 +695,7 @@
 
   <!-- ===== Navbar ===== -->
 <nav class="navbar fixed-top" style="background-color:#ffffff;">
-  <BR><BR>
+  
   <div class="container-fluid">
 
       <!-- LOGO -->
@@ -732,7 +866,6 @@
 
   </div>
 </div>
-<br>
 
 
 
@@ -772,7 +905,7 @@
 
 
 
-<br><br><br><br>
+<br>
 
 
 
