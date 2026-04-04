@@ -8,5 +8,3 @@ django-cloudinary-storage
 dj-database-url
 requests
 razorpay
-xhtml2pdf
-reportlab
