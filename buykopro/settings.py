@@ -87,20 +87,17 @@ WSGI_APPLICATION = 'buykopro.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-
 import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# -------- DATABASE (PostgreSQL) --------
 DATABASES = {
     'default': dj_database_url.parse(
         'postgresql://buyko_user:A2mxy2iIKmZdK43kzTlAlnYxjEF4MgpX@dpg-d78ftk450q8c73esu3i0-a.oregon-postgres.render.com/buyko'
     )
 }
 
-# -------- CLOUDINARY CONFIG --------
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dprmswawl',
     'API_KEY': '214959546412619',
@@ -108,7 +105,6 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
